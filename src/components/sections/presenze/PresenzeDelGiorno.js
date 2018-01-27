@@ -17,7 +17,7 @@ import renderWhenFetchError from '../../enhancers/renderWhenFetchError'
 import renderNewIfEmpty from '../../enhancers/renderNewIfEmpty'
 
 const PresenzeDelGiorno = (props) => (
-  <Card>
+  <Card centered>
     <Card.Content>
       <Card.Header>
         Presenze del {props.day.format('ddd DD/MMM/YYYY')}
@@ -47,7 +47,6 @@ export default compose(
       options: ({day}) => {
         const beginDay = day.clone().format('YYYY-MM-DD')
         const endDay = day.clone().add(1, 'd').format('YYYY-MM-DD')
-        console.log(beginDay)
         return ({variables: {beginDay, endDay}})
       }
     }

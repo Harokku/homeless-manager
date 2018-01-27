@@ -1,40 +1,25 @@
 import React from 'react'
-import {compose, withState, withHandlers} from 'recompose'
 import moment from 'moment'
 
-import {Grid, Button} from 'semantic-ui-react'
+import {Button} from 'semantic-ui-react'
 
 const PresenzeDateSelector = (props) => (
-  <Grid columns='equal'>
-    {console.log(props.selectedDate)}
-    <Grid.Column>
-      {moment(props.selectedDate).subtract(1, 'd').toString()}
-    </Grid.Column>
-    <Grid.Column>
-      {props.selectedDate}
-    </Grid.Column>
-    <Grid.Column>
-      {moment(props.selectedDate).add(1, 'd').toString()}
-    </Grid.Column>
-  </Grid>
+  <Button.Group size='mini' fluid compact>
+    <Button labelPosition='left'
+            icon='left chevron'
+            content={moment(props.selectedDate).subtract(1, 'd').format('ddd DD/MM/YYYY')}
+            onClick={props.onRemoveDay}
+    />
+    <Button
+            content='Oggi'
+            onClick={props.onToday}
+    />
+    <Button labelPosition='right'
+            icon='right chevron'
+            content={moment(props.selectedDate).add(1, 'd').format('ddd DD/MM/YYYY')}
+            onClick={props.onAddDay}
+    />
+  </Button.Group>
 )
 
-const stateManager = withHandlers({
-  addDay: ({selectedDate, setDate}) => (event, data) => {
-    event.preventDefault()
-    setDate(moment(selectedDate).add(1, 'd').toString())
-  },
-  removeDay: ({selectedDate, setDate}) => (event, data) => {
-    event.preventDefault()
-    setDate(moment(selectedDate).subtract(1, 'd').toString())
-  },
-  today: ({setDate}) => (event, data) => {
-    event.preventDefault()
-    setDate(moment().toString())
-  }
-})
-
-export default compose(
-  withState('selectedDate', 'setDate', moment().toString() ),
-  stateManager
-)(PresenzeDateSelector)
+export default PresenzeDateSelector
