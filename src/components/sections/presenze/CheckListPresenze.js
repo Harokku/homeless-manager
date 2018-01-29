@@ -19,7 +19,6 @@ import renderNullIfNotToday from '../../enhancers/renderNullIfNotToday'
 
 const CheckListPresenze = (props) => (
   <Card centered>
-    {console.log(props)}
     <Card.Content header={'Presenti al ' + props.day.format('DD/MM/YYYY')}/>
     <Card.Content>
       {GuestList(props.data.allGuests, props.togglePresent)}
@@ -39,7 +38,6 @@ const CheckListPresenze = (props) => (
           }]
         })}>Save</Button>
       </Button.Group>
-      {JSON.stringify(props.presentList)}
     </Card.Content>
   </Card>
 )

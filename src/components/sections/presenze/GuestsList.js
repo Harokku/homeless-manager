@@ -14,6 +14,7 @@ const ListGuests = (allGuests, togglePresent) => (
                                  />
           </List.Header>
           <List.Description>Eta' {moment().diff(guest.dob, 'year')} anni</List.Description>
+          <List.Description>{'Lingue: ' + guest.languages.map(language => `${language} `)}</List.Description>
         </List.Content>
       </List.Item>
     )}

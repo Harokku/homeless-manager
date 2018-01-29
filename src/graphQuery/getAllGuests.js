@@ -7,6 +7,7 @@ const GET_ALL_GUESTS = gql`
           idCode
           nickName
           dob
+          languages
       }
   }
 `

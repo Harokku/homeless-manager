@@ -2,7 +2,7 @@ import React from 'react'
 import {Switch, Route} from 'react-router-dom'
 
 import Presenze from '../sections/presenze/Presenze'
-import Consegne from '../sections/Consegne'
+import Consegne from '../sections/consegne/Consegne'
 
 const MainContainer = () => (
   <Switch>
