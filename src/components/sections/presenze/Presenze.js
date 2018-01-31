@@ -1,13 +1,13 @@
 import React from 'react'
 import PresenzeDelGiorno from './PresenzeDelGiorno'
-import PresenzeDateSelector from './PresenzeDateSelector'
+import DateSequenzialSelector from '../../standards/DateSequenzialSelector'
 import moment from 'moment'
 
 import {compose, withState, withHandlers} from 'recompose'
 
 const Presenze = (props) => (
   <div>
-    <PresenzeDateSelector
+    <DateSequenzialSelector
       selectedDate={props.selectedDate}
       onAddDay={props.addDay}
       onRemoveDay={props.removeDay}
@@ -16,7 +16,6 @@ const Presenze = (props) => (
     <PresenzeDelGiorno
       day={moment(props.selectedDate)}
     />
-    {/*<CheckListPresenze header={'Inserisci presenti del ' + moment().format('ddd DD/MMM/YYYY')}/>*/}
   </div>
 )
 

@@ -11,7 +11,7 @@ import {GET_PRESENCES_OF_DAY} from '../../../graphQuery/getAllPresences'
 // Standard HOC guards
 import LoadingSpinner from '../../standards/LoadingSpinner'
 import ErrorComp from '../../standards/ErrorComp'
-import CheckListPresenze from '../../sections/presenze/CheckListPresenze'
+import CheckListPresenze from './CheckListPresenze'
 import renderWhileLoading from '../../enhancers/renderWhileLoading'
 import renderWhenFetchError from '../../enhancers/renderWhenFetchError'
 import renderNewIfEmpty from '../../enhancers/renderNewIfEmpty'

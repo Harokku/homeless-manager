@@ -1,5 +1,5 @@
 import React from 'react'
-import {compose, withStateHandlers, withHandlers} from 'recompose'
+import {compose, withStateHandlers} from 'recompose'
 import {graphql} from 'react-apollo'
 import moment from 'moment'
 
@@ -7,6 +7,8 @@ import {Card, Form, Input, TextArea, Button, Dropdown} from 'semantic-ui-react'
 
 // Graph queries
 import GET_ENUMS from '../../../graphQuery/getEnums'
+import {GET_TURNS_BY_DAY} from '../../../graphQuery/getAllTurns'
+import {POST_TURN_REPORT} from '../../../graphQuery/postTurnReport'
 
 // Standard HOC guards
 import LoadingSpinner from '../../standards/LoadingSpinner'
@@ -32,6 +34,27 @@ const dateFiller = (dayNumber) => {
   )
 }
 
+const createNewTurnReport = (props) => (event, data) => {
+  event.preventDefault()
+  props.mutate({
+    variables: {
+      date: props.formDate,
+      operator: props.formOperator,
+      category: props.formCategory,
+      message: props.formConsegna,
+    },
+    refetchQueries: [{
+      query: GET_TURNS_BY_DAY,
+      variables: {
+        beginDay: moment().format('YYYY-MM-DD'),
+        endDay: moment().add(1, 'd').format('YYYY-MM-DD')
+      }
+    }]
+  })
+  props.resetFormState(event, data)
+}
+
+// TODO: Implement onChange validation
 const NuovaConsegna = (props) => (
   <Card centered>
     <Card.Content header='Nuova consegna'/>
@@ -49,7 +72,7 @@ const NuovaConsegna = (props) => (
                       label='Inserisci consegna'
                       placeholder='Nuova consegna' onChange={props.updateFormState}/>
         </Form.Group>
-        <Form.Field positive control={Button} content='Salva'/>
+        <Form.Field positive control={Button} content='Salva' onClick={createNewTurnReport(props)}/>
       </Form>
     </Card.Content>
   </Card>
@@ -57,6 +80,7 @@ const NuovaConsegna = (props) => (
 
 export default compose(
   graphql(GET_ENUMS, {options: {variables: {enumName: 'NOTE_CATEGORIES'}}}),
+  graphql(POST_TURN_REPORT),
   renderWhileLoading(LoadingSpinner),
   renderWhenFetchError(ErrorComp),
   withStateHandlers(() => ({
@@ -68,7 +92,13 @@ export default compose(
     {
       updateFormState: () => (event, data) => ({
         [data.name]: data.value
+      }),
+      resetFormState: () => (event, data) => ({
+        formDate: '',
+        formOperator: '',
+        formCategory: '',
+        formConsegna: '',
       })
-    })
-)
-(NuovaConsegna)
+    }
+  )
+)(NuovaConsegna)
